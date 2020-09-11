@@ -1,0 +1,51 @@
+const path = require("path")
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    mode:"development", // decide build on development or production, default: production
+    // devtool: "none", // get rid of the the eval shit in main.js and turns it to become something more readable
+    devtool: "cheap-module-eval-source-map", // show the source of error instead of main.js(bundler)
+    entry:"./src/index.js",
+    output:{
+        filename:"main.[contentHash].js", // contentHash: Evertime we made a change there will be a new contentHash appears in the middle of the file name 
+        path: path.resolve(__dirname, "public/")
+    },
+    plugins:[
+        new HtmlWebpackPlugin({template:"./src/template.html"}) // enable adding <script> tag in html file automatically  <!-- <script src="./main.js"></script> --> to template.html file 
+                                                                // and create a index.html file in the output location (which is public/ in our case) copied from template.html file
+    ],
+    module:{  
+        //webpack can only read json and vanilla js file, if we want webpack to be able to deal with other type of file 
+        // like css file and sass file and es6 js, we need the respective loader
+        rules:[
+            {
+                test:/\.scss$/i,
+                use:[
+                    'style-loader',// 3. inject style in DOM
+                    'css-loader', //2. turn css to commonjs
+                    'sass-loader' // 1. turn scss to css
+                ]// css loader can only 
+                //!!!!! Be careful here, style-loader can only work after css-loader, but here we put style-loader at the front of css-loader
+                // cause it actually load in reverse order
+            },
+            {
+                test : /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                  loader: 'babel-loader', //transfer es6 --> es5
+                  options: {
+                    presets: [
+                        '@babel/preset-env',
+                        "@babel/preset-react"
+                    ]
+                  }
+                }
+            }
+        ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'public/'),
+        compress: true,
+        port: 9000
+    },
+}

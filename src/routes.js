@@ -13,7 +13,8 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
+    layout: "/admin",
+    rtlActive: false
   },
   {
     path: "/user",
@@ -21,7 +22,8 @@ const dashboardRoutes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: "/admin"
+    layout: "/admin",
+    rtlActive: false
   },
   {
     path: "/table",
@@ -29,7 +31,8 @@ const dashboardRoutes = [
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
-    layout: "/admin"
+    layout: "/admin",
+    rtlActive: false
   }
 ];
 

@@ -58,7 +58,7 @@ const SideDrawer = ({toggleClose, open}) => {
                     </ListItemIcon>
                     
                     <ListItemText
-                        primary={prop.name}
+                        primary={prop.rtlActive ? prop.rtlName : prop.name}
                         className={clsx("NavLink_text", whiteFontClasses)}
                         disableTypography={true}
                     />
